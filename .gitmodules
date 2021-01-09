@@ -1,0 +1,3 @@
+[submodule "src"]
+	path = src
+	url = git://www.aleph1.co.uk/yaffs2
