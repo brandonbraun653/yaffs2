@@ -16,6 +16,7 @@
 #ifndef __YPORTENV_H__
 #define __YPORTENV_H__
 
+#include "yaffscfg.h"
 
 #ifdef __rtems__
 
