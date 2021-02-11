@@ -43,7 +43,7 @@ static constexpr std::string_view THREAD_NAME = "yaffs_gc";
 Static Data
 -------------------------------------------------------------------------------*/
 static int yaffsfs_lastError;
-static Chimera::Threading::RecursiveMutex yaffs_mutex;
+static Chimera::Thread::RecursiveMutex yaffs_mutex;
 
 
 /*-------------------------------------------------------------------------------
@@ -97,11 +97,11 @@ Public Functions
 -------------------------------------------------------------------------------*/
 void yaffsfs_OSInitialisation( void )
 {
-  using namespace Chimera::Threading;
+  using namespace Chimera::Thread;
 
-  Thread garbageCollector;
+  Task garbageCollector;
   garbageCollector.initialize( background_garbage_collect, nullptr, Priority::LEVEL_1, THREAD_STACK, THREAD_NAME.cbegin() );
-  ThreadId id = garbageCollector.start();
+  TaskId id = garbageCollector.start();
 
   RT_HARD_ASSERT( id != THREAD_ID_INVALID );
 }
