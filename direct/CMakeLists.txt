@@ -1,18 +1,9 @@
 include("${COMMON_TOOL_ROOT}/cmake/utility/embedded.cmake")
 
-# ====================================================
-# Common
-# ====================================================
-set(LINK_LIBS
-  yaffs_inc
-)
-
-# ====================================================
-# Interface Library
-# ====================================================
-function(build_library variant)
-  set(DRIVER yaffs2_direct${variant})
-  add_library(${DRIVER} STATIC
+gen_static_lib_variants(
+  TARGET
+    yaffs2_direct
+  SOURCES
     optional_sort/qsort.c
     yaffs_allocator.c
     yaffs_attribs.c
@@ -34,9 +25,9 @@ function(build_library variant)
     yaffs_yaffs1.c
     yaffs_yaffs2.c
     yaffsfs.c
-  )
-  target_link_libraries(${DRIVER} PRIVATE ${LINK_LIBS} prj_device_target prj_build_target${variant})
-  export(TARGETS ${DRIVER} FILE "${PROJECT_BINARY_DIR}/yaffs/${DRIVER}.cmake")
-endfunction()
-
-add_target_variants(build_library)
+  PRV_LIBRARIES
+    project_inc
+    yaffs_intf_inc
+  EXPORT_DIR
+    "${PROJECT_BINARY_DIR}/Yaffs"
+)

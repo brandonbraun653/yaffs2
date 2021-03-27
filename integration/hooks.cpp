@@ -15,13 +15,17 @@
 extern "C"
 {
 #endif
+#include "SEGGER_SYSVIEW.h"
+#include "yaffs_trace.h"
 
-unsigned int yaffs_trace_mask;
+unsigned int yaffs_trace_mask = YAFFS_TRACE_ALWAYS;
 
 void yaffs_bug_fn(const char *file_name, int line_no)
 {
   ( void )file_name;
   ( void )line_no;
+
+  SEGGER_SYSVIEW_PrintfTarget( "YAFFS bug in %s line %d\n", file_name, line_no );
 }
 
 
